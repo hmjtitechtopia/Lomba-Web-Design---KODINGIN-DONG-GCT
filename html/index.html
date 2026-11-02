@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id" class="intro-mode">
+<head>
+    <meta charset="utf-8">
+    <title>Atlas Kultural Bali</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gantari:wght@400..700&amp;display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/beranda.css">
+    <link rel="stylesheet" href="../css/wilayah.css">
+    <link rel="stylesheet" href="../css/peta.css">
+</head>
+
+<body>
+    <header class="top-nav" id="nav">
+        <nav aria-label="Navigasi utama">
+            <div class="pill-menu">
+                <span class="pill_indicator" aria-hidden="true"></span>
+                <ul>
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#wilayah">Wilayah</a></li>
+                    <li><a href="#peta">Peta</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="view-home">
+            <section id="beranda" aria-labelledby="hero-title">
+                <div class="hero_frame">
+                    <video class="hero_video" id="hero-video" muted loop playsinline preload="auto" aria-hidden="true"
+                        data-src="../assets/video/hero.mp4"></video>
+                    <div class="hero_overlay"></div>
+                    <div class="hero_text">
+                        <h1 class="hero_title" id="hero-title">Atlas Kultural Bali</h1>
+                        <p class="hero_intro">Sembilan kabupaten dan kota dalam satu pulau. Jelajahi tradisi, seni, tempat terunik, sampai 716 desa dan kelurahan.</p>
+                        <a class="button-dark" href="#wilayah">Jelajahi wilayah <i data-lucide="arrow-up-right"></i></a>
+                    </div>
+                    <a class="hero_scroll" href="#wilayah" aria-label="Gulir ke sembilan wilayah">
+                        <span aria-hidden="true">SCROLL</span>
+                        <i aria-hidden="true"></i>
+                    </a>
+                </div>
+            </section>
+
+            <section class="region-list" id="wilayah" aria-labelledby="regions-title">
+                <div class="region-list_stage" id="regions-stage">
+                    <div class="wrapper">
+                        <div>
+                            <div class="region-list_intro">
+                                <h2 class="section-title" id="regions-title">Sembilan Wilayah, Satu Pulau</h2>
+                                <p class="intro-text" id="regions-lede"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rail-wrapper">
+                        <button class="rail-button-prev" type="button" id="rail-prev" aria-label="Wilayah sebelumnya">
+                            <i data-lucide="arrow-left"></i>
+                        </button>
+                        <div class="rail" id="rail" tabindex="-1">
+                            <ol class="rail_track" id="rail-track" aria-label="Sembilan kabupaten dan kota"></ol>
+                        </div>
+                        <button class="rail-button-next" type="button" id="rail-next" aria-label="Wilayah berikutnya">
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="wrapper">
+                        <div class="rail_progress" aria-hidden="true">
+                            <span id="rail-bar"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="island" id="peta" aria-labelledby="map-title">
+                <div class="wrapper">
+                    <div>
+                        <div class="chapter_header">
+                            <h2 class="section-title" id="map-title">Pulau dari atas</h2>
+                            <p class="intro-text">Arahkan kursor ke pulau untuk melihat nama wilayah, klik untuk memperbesar dan memunculkan titik tempat terunik.</p>
+                        </div>
+                        <ul class="region-picker" id="map-chips" aria-label="Pilih wilayah di peta"></ul>
+                        <div class="island_grid">
+                            <div class="map-frame">
+                                <div id="bali-map" role="region" aria-label="Peta batas sembilan kabupaten/kota Provinsi Bali">
+                                    <p class="map-message">Memuat peta...</p>
+                                </div>
+                                <div class="map-tools">
+                                    <button class="button-dark-small" type="button" id="btn-reset" hidden>
+                                        <i data-lucide="locate"></i> Seluruh pulau</button>
+                                </div>
+                                <p class="map-hint" id="map-hint">Klik wilayah untuk melihat lebih detail</p>
+                            </div>
+                            <aside class="map-panel" id="map-panel" aria-live="polite" aria-label="Ringkasan wilayah terpilih"></aside>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-detail" hidden>
+            <nav class="section-nav" id="d-tabs" aria-label="Bagian halaman">
+                <div class="pill-section">
+                    <a class="pill_back" href="#beranda" aria-label="Kembali ke beranda">
+                        <i data-lucide="arrow-left"></i></a>
+                    <div class="pill_scroll">
+                        <span class="pill_indicator" aria-hidden="true"></span>
+                        <ul>
+                            <li><a href="#penjelasan">Penjelasan</a></li>
+                            <li><a href="#tradisi">Tradisi</a></li>
+                            <li><a href="#seni">Seni</a></li>
+                            <li><a href="#tempat">Tempat terunik</a></li>
+                            <li><a href="#desa">Desa &amp; kelurahan</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <section class="region-header" id="ringkasan" aria-labelledby="d-title">
+                <div class="wrapper">
+                    <div class="region-header_grid">
+                        <div class="region-header_text">
+                            <nav class="breadcrumb" aria-label="Breadcrumb">
+                                <ol>
+                                    <li><a href="#beranda">Beranda</a></li>
+                                    <li><a href="#wilayah">Wilayah</a></li>
+                                    <li><span aria-current="page" id="bc-current"></span></li>
+                                </ol>
+                            </nav>
+                            <h1 class="region-title" id="d-title" tabindex="-1"></h1>
+                            <p class="region-nickname" id="d-julukan"></p>
+                            <p class="region-intro" id="d-lead"></p>
+                        </div>
+                        <div class="region-header_photo" id="d-plate"></div>
+                    </div>
+                    <dl class="facts" id="d-facts">
+                        <div>
+                            <dt>Ibu kota</dt>
+                            <dd><span id="d-capital"></span><small id="d-capital-note"></small></dd>
+                        </div>
+                        <div>
+                            <dt>Luas</dt>
+                            <dd><span id="d-area" data-count></span> km²</dd>
+                        </div>
+                        <div>
+                            <dt>Penduduk</dt>
+                            <dd><span id="d-population" data-count></span> jiwa</dd>
+                        </div>
+                        <div>
+                            <dt>Kecamatan</dt>
+                            <dd><span id="d-districts" data-count></span></dd>
+                        </div>
+                        <div>
+                            <dt>Desa / kelurahan</dt>
+                            <dd id="d-villages"></dd>
+                        </div>
+                    </dl>
+                </div>
+            </section>
+
+            <section class="chapter" id="penjelasan" aria-labelledby="h-penjelasan">
+                <div class="wrapper">
+                    <div class="about">
+                        <div class="about_text">
+                            <h2 class="section-title" id="h-penjelasan">Mengenal <span id="d-name-em"></span></h2>
+                            <div id="d-penjelasan" class="about_body"></div>
+                            <div class="about_block">
+                                <h3>Sejarah singkat</h3>
+                                <p id="d-sejarah"></p>
+                            </div>
+                            <div class="about_block" id="d-julukan-card">
+                                <h3>Julukan</h3>
+                                <p></p>
+                                <p></p>
+                            </div>
+                        </div>
+                        <figure class="mini-map">
+                            <div class="mini-map_frame" id="mini-map" role="region" aria-label="Peta lokasi wilayah di Pulau Bali"></div>
+                            <figcaption>Letak wilayah di pulau. Klik wilayah lain untuk membukanya.</figcaption>
+                        </figure>
+                    </div>
+                </div> 
+            </section>
+
+            <section class="chapter-soft" id="tradisi" aria-labelledby="h-tradisi">
+                <div class="wrapper">
+                    <div>
+                        <div class="chapter_header">
+                            <h2 class="section-title" id="h-tradisi">Tradisi</h2>
+                            <p class="intro-text">Upacara dan adat yang berasal dari wilayah ini.</p>
+                        </div>
+                        <ol class="item-list" id="tradisi-list"></ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="chapter" id="seni" aria-labelledby="h-seni">
+                <div class="wrapper">
+                    <div>
+                        <div class="chapter_header">
+                            <h2 class="section-title" id="h-seni">Seni</h2>
+                            <p class="intro-text">Tari, musik, kriya, dan arsitektur yang lahir di sini.</p>
+                        </div>
+                        <ol class="item-list" id="seni-list"></ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="chapter-soft" id="tempat" aria-labelledby="h-tempat">
+                <div class="wrapper">
+                    <div>
+                        <div class="row-header">
+                            <h2 class="section-title" id="h-tempat">Tempat terunik</h2>
+                            <div class="rail-nav">
+                                <button class="icon-button" type="button" id="tempat-prev" aria-label="Tempat sebelumnya"><i data-lucide="arrow-left"></i></button>
+                                <button class="icon-button" type="button" id="tempat-next" aria-label="Tempat berikutnya"><i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+                        <ol class="place-row" id="tempat-list" tabindex="0" aria-label="Daftar tempat terunik, geser ke samping"></ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="chapter" id="desa" aria-labelledby="h-desa">
+                <div class="wrapper">
+                    <div>
+                        <div class="chapter_header">
+                            <h2 class="section-title" id="h-desa">Desa &amp; kelurahan</h2>
+                            <p class="intro-text" id="desa-intro"></p>
+                        </div>
+                        <div class="village-tools" role="search">
+                            <label class="village-field-search">
+                                <span class="sr-only">Cari desa atau kelurahan</span>
+                                <i data-lucide="search"></i>
+                                <input type="search" id="v-search" placeholder="Cari nama desa atau kelurahan" autocomplete="off">
+                            </label>
+                            <div class="district-select" id="v-kecamatan-box">
+                                <button class="district-select_button" type="button" id="v-kecamatan-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="v-kecamatan">
+                                    <i data-lucide="list-filter"></i>
+                                    <span class="sr-only">Saring kecamatan: </span>
+                                    <span class="district-select_value" id="v-kecamatan-label">Semua kecamatan</span>
+                                    <i class="district-select_arrow" data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="district-select_backdrop" id="v-kecamatan-scrim" hidden></div>
+                                <div class="district-select_panel" id="v-kecamatan-panel" hidden>
+                                    <p class="district-select_title">Saring kecamatan</p>
+                                    <ul class="district-select_list" id="v-kecamatan" role="listbox"
+                                        aria-label="Saring kecamatan" data-lenis-prevent></ul>
+                                </div>
+                            </div>
+                            <fieldset class="type-select" id="v-jenis">
+                                <legend class="sr-only">Jenis wilayah</legend>
+                                <label><input type="radio" name="jenis" value="" checked><span>Semua</span></label>
+                                <label><input type="radio" name="jenis" value="Desa"><span>Desa</span></label>
+                                <label><input type="radio" name="jenis" value="Kelurahan"><span>Kelurahan</span></label>
+                            </fieldset>
+                            <div class="village-actions">
+                                <button class="button-outline" type="button" id="v-expand">Buka semua</button>
+                                <button class="button-outline" type="button" id="v-collapse">Tutup semua</button>
+                            </div>
+                        </div>
+                        <p class="village-count" aria-live="polite">Menampilkan <b id="v-count-shown"></b> dari <span id="v-count-total"></span> desa dan kelurahan<span id="v-count-query"></span>.</p>
+                        <div id="v-list"></div>
+                        <p class="village-empty" id="v-empty" hidden>Tidak ada desa atau kelurahan dengan nama itu. Coba kata yang lebih pendek atau pilih "Semua kecamatan".</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrapper">
+            <div>
+                <div class="site-footer_top">
+                    <p class="site-footer_name">Atlas Kultural Bali</p>
+                    <p class="site-footer_note">Situs edukasi tentang pariwisata dan budaya Provinsi Bali, mencakup
+                        sembilan kabupaten dan kota serta 716 desa dan kelurahan. Pilih wilayah di peta untuk membaca
+                        tradisi, seni, dan tempat terunik di sana. </p>
+                </div>
+                <div class="site-footer_bottom">
+                    <p>© 2026 Kodingin Dong GCT.</p>
+                    <p>Foto dari Wikimedia Commons dan sumber lain yang tertaut pada tiap foto. Batas wilayah:
+                        geoBoundaries (CC BY 3.0 IGO). Data desa: Kepmendagri 2025.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="term-bubble" id="term-tip" role="tooltip" hidden>
+        <b id="term-tip-name"></b>
+        <p id="term-tip-text"></p>
+    </div>
+
+    <div class="curtain" id="curtain" aria-hidden="true">
+        <p class="curtain_name" id="curtain-name">Atlas Kultural Bali</p>
+        <span class="curtain_line"></span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@1.54.0/dist/umd/lucide.min.js"></script>
+    <script src="../javascript/data.js"></script>
+    <script type="module" src="../javascript/main.js"></script>
+</body>
+
+</html>

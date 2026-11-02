@@ -1,0 +1,138 @@
+<!--FILE TEMPLATE YANG AKAN DIGUNAKAN OLEH SCRIPT.JS -->
+<template id="tpl-region-card">
+    <li class="region-card">
+        <h3 class="region-card_name"></h3>
+        <figure class="region-card_media">
+            <img alt="" decoding="async">
+            <div class="region-card_body">
+                <span class="region-card_nickname"></span>
+                <a class="region-card_link">Jelajahi <i data-lucide="arrow-up-right"></i></a>
+            </div>
+        </figure>
+    </li>
+</template>
+
+<template id="tpl-chip">
+    <li><button type="button" aria-pressed="false"></button></li>
+</template>
+
+<template id="tpl-panel-empty">
+    <figure class="map-panel_photo"><img alt=""></figure>
+    <div class="map-panel_body">
+        <h3 class="map-panel_name">Pilih wilayah</h3>
+        <p class="map-panel_summary">Klik salah satu wilayah di peta atau pada daftar di atasnya. Titik tempat muncul di peta, lalu ringkasan, foto, dan angka wilayah itu tampil di sini.</p>
+        <dl class="map-panel_facts">
+            <div>
+                <dt>Kabupaten/kota</dt>
+                <dd data-field="wilayah"></dd>
+            </div>
+            <div>
+                <dt>Kecamatan</dt>
+                <dd data-field="kecamatan"></dd>
+            </div>
+            <div>
+                <dt>Desa/kelurahan</dt>
+                <dd data-field="desa"></dd>
+            </div>
+        </dl>
+    </div>
+</template>
+
+<template id="tpl-panel-region">
+    <figure class="map-panel_photo"><img alt=""></figure>
+    <div class="map-panel_body">
+        <h3 class="map-panel_name" data-field="nama"></h3>
+        <p class="map-panel_nickname" data-field="julukan"></p>
+        <p class="map-panel_summary" data-field="ringkasan"></p>
+        <dl class="map-panel_facts">
+            <div>
+                <dt>Ibu kota</dt>
+                <dd data-field="ibu-kota"></dd>
+            </div>
+            <div>
+                <dt>Luas</dt>
+                <dd data-field="luas"></dd>
+            </div>
+            <div>
+                <dt>Desa/kel.</dt>
+                <dd data-field="desa"></dd>
+            </div>
+        </dl>
+        <a class="map-panel_action"><span data-field="tautan"></span><i data-lucide="arrow-up-right"></i></a>
+    </div>
+</template>
+
+<template id="tpl-photo">
+    <figure class="photo"><img alt="" decoding="async"></figure>
+</template>
+
+<template id="tpl-photo-note">
+    <figcaption class="photo_caption"></figcaption>
+</template>
+
+<template id="tpl-credit">
+    <a class="photo-credit" target="_blank" rel="noopener"></a>
+</template>
+
+<template id="tpl-kec-option">
+    <li role="option" aria-selected="false" tabindex="-1">
+        <span class="district-select_name"></span>
+        <small class="district-select_count"></small>
+        <i data-lucide="check"></i>
+    </li>
+</template>
+
+<template id="tpl-term">
+    <button class="term" type="button"></button>
+</template>
+
+<template id="tpl-item">
+    <li class="item">
+        <div class="item_text">
+            <h3></h3>
+            <p class="item_status"></p>
+            <p class="item_location"></p>
+            <p class="item_description"></p>
+        </div>
+    </li>
+</template>
+
+<template id="tpl-place">
+    <li>
+        <h3></h3>
+        <p class="place-location"></p>
+        <p class="place-description"></p>
+        <p class="place-coordinates"></p>
+        <p><a class="button-dark-small" target="_blank" rel="noopener">Buka di Google Maps 
+            <i data-lucide="arrow-up-right"></i><span class="sr-only">(tab baru)</span></a></p>
+    </li>
+</template>
+
+<template id="tpl-kec">
+    <div class="district">
+        <h3>
+            <button class="district_button" type="button" aria-expanded="false">
+                <span class="district_name"></span>
+                <span class="district_count"></span>
+                <span class="district_arrow"><i data-lucide="chevron-down"></i></span>
+            </button>
+        </h3>
+        <div class="district_panel" role="region" hidden>
+            <ul class="village-list"></ul>
+        </div>
+    </div>
+</template>
+
+<template id="tpl-village">
+    <li><a target="_blank" rel="noopener"><span data-label></span><small>kel.</small></a></li>
+</template>
+
+<template id="tpl-map-message">
+    <p class="map-message"></p>
+</template>
+
+<template id="tpl-place-popup">
+    <div><strong></strong><span></span><br><a target="_blank" rel="noopener">Buka di Google Maps</a></div>
+</template>
+
+<template id="tpl-attribution">Batas wilayah: <a href="https://www.geoboundaries.org/" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 3.0 IGO)</template>
